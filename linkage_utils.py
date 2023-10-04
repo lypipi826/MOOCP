@@ -857,6 +857,7 @@ def evaluate_submission():
         if os.path.exists('./results/%i.csv' % i):
 
             mechanisms = get_population_csv('./results/%i.csv' % i)
+            print(i)
             F = []
             for m in mechanisms:
                 C, x0, fixed_nodes, motor, target = from_1D_representation(m)
@@ -867,12 +868,14 @@ def evaluate_submission():
 
                 if valid:
                     if CD <= 0.1 and material <= 10.0:
+                        print(f'CD{CD} mat{material}')
                         F.append([CD, material])
             if len(F):
                 if len(F) > 1000:
                     print(
                         "Over 1000 linkages submitted! Truncating submission to first 1000.")
                     F = F[:1000]
+                
                 scores.append(hyper_volume(np.array(F), [0.1, 10.0]))
             else:
                 scores.append(0)
